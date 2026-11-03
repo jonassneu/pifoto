@@ -1,6 +1,6 @@
 # PiFoto
 
-A small, self-hosted photo library: a minimal Google Photos alternative that runs on a
+An extremely lightweight, self-hosted photo library: a minimal Google Photos alternative that runs on a
 Raspberry Pi 1 (ARMv6, 512 MB RAM).
 
 ## Extremely lightweight
