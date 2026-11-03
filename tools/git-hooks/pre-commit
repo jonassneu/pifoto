@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Checks the staged files before every commit (see tools/check-public.sh).
+exec "$(git rev-parse --show-toplevel)/tools/check-public.sh"

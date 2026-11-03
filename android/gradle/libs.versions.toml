@@ -1,0 +1,11 @@
+[versions]
+agp = "9.2.1"
+coreKtx = "1.13.1"
+work = "2.10.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }

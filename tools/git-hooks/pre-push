@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Checks every commit about to be pushed, not just the last one: something added in one commit
+# and deleted in the next would still be public in the history (see tools/check-public.sh).
+remote="$1"
+revs=()
+while read -r _ local_sha _ remote_sha; do
+  case "$local_sha" in *[!0]*) ;; *) continue ;; esac   # deleting a branch: nothing to check
+  if [[ "$remote_sha" =~ ^0+$ ]]; then
+    mapfile -t new < <(git rev-list "$local_sha" --not --remotes="$remote")
+  else
+    mapfile -t new < <(git rev-list "$remote_sha..$local_sha")
+  fi
+  revs+=("${new[@]}")
+done
+[ ${#revs[@]} -eq 0 ] && exit 0
+exec "$(git rev-parse --show-toplevel)/tools/check-public.sh" "${revs[@]}"

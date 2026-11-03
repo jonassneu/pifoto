@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Always the dark PiFoto look, whatever the system's light/dark setting. Edge-to-edge: the
+         activities draw behind the bars and pad themselves with the window insets. -->
+    <style name="Base.PiFoto" parent="android:Theme.Material.NoActionBar">
+        <item name="android:colorPrimary">@color/bg</item>
+        <item name="android:colorPrimaryDark">@color/bg</item>
+        <item name="android:colorAccent">@color/acc</item>
+        <item name="android:colorControlActivated">@color/acc</item>
+        <item name="android:colorControlHighlight">#1AFFFFFF</item>
+        <item name="android:textColorPrimary">@color/fg</item>
+        <item name="android:textColorSecondary">@color/mut</item>
+        <item name="android:textColorHighlight">#596AA8FF</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+        <item name="android:navigationBarDividerColor">@color/bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:enforceStatusBarContrast">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+    <style name="Theme.PiFoto" parent="Base.PiFoto" />
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tokens from the PiFoto system board (code uses the same values in Ui.kt). -->
+<resources>
+    <color name="bg">#111214</color>
+    <color name="fg">#ECECEE</color>
+    <color name="mut">#A0A2A9</color>
+    <color name="acc">#6AA8FF</color>
+    <color name="on_mark">#0D1A2E</color>
+</resources>

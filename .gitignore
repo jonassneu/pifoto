@@ -1,0 +1,37 @@
+# Build outputs (build them yourself; never commit binaries or APKs)
+/pifoto-armv6
+/pifoto-amd64
+/pifoto
+/takeout-import
+/PiFoto.apk
+*.apk
+*.aab
+
+# Android / Gradle
+android/.gradle/
+android/.kotlin/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+*.iml
+
+# Secrets and runtime data (should never be in this folder, but just in case)
+*.jks
+*.keystore
+*.p12
+*.pem
+release-signing.properties
+cookies.txt
+.env
+users.json
+sessions.json
+links.json
+index.json
+config.json
+
+# Settings for this one Pi (its public address is in these)
+/CLAUDE.md
+/deploy/local/
+/web/install-qr.png
+/docs/install-qr.png

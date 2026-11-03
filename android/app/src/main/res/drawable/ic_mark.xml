@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The PiFoto app mark (32-unit grid), used inside the app. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="56dp" android:height="56dp"
+    android:viewportWidth="32" android:viewportHeight="32">
+    <path android:fillColor="@color/acc"
+        android:pathData="M9,0h14a9,9 0,0 1,9 9v14a9,9 0,0 1,-9 9h-14a9,9 0,0 1,-9 -9v-14a9,9 0,0 1,9 -9z" />
+    <path android:strokeColor="@color/on_mark" android:strokeWidth="3"
+        android:pathData="M8.8,17a7.2,7.2 0,1 0,14.4 0a7.2,7.2 0,1 0,-14.4 0" />
+    <path android:fillColor="@color/on_mark"
+        android:pathData="M22.3,8.2a1.9,1.9 0,1 0,3.8 0a1.9,1.9 0,1 0,-3.8 0" />
+</vector>

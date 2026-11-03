@@ -1,0 +1,79 @@
+[Unit]
+Description=PiFoto photo library
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=pifoto
+Group=pifoto
+# Settings for one particular Pi (the public address from -remote-url, for example) go in a drop-in,
+# so this file can be copied over without losing them: /etc/systemd/system/pifoto.service.d/local.conf
+#   [Service]
+#   ExecStart=
+#   ExecStart=/opt/pifoto/pifoto -data /mnt/dietpi_userdata/pifoto -addr :80 -remote-url https://<pi>.<tailnet>.ts.net
+ExecStart=/opt/pifoto/pifoto -data /mnt/dietpi_userdata/pifoto -addr :80
+Restart=always
+# SIGTERM goes to pifoto only: it stops the thumbnail worker cleanly and writes the index, then
+# systemd kills a still-running djpeg. (By default djpeg got SIGTERM too and its job counted as failed.)
+KillMode=mixed
+RestartSec=3
+Environment=GOGC=50
+Environment=GOMEMLIMIT=180MiB
+
+# Sandbox. Check with: systemd-analyze security pifoto
+# Port 80 is the only privilege it needs.
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+NoNewPrivileges=yes
+# The whole file system is read-only except the library. /home and /root are hidden.
+ProtectSystem=strict
+ReadWritePaths=/mnt/dietpi_userdata/pifoto
+ProtectHome=yes
+PrivateTmp=yes
+# It can run only itself, nice and djpeg (plus the shared libraries in /usr/lib/arm-linux-gnueabihf,
+# which must follow the Pi image's multiarch layout). It cannot start a shell or
+# any other program, and nothing it can write to is executable. "/" does not cover the paths that
+# other options mount separately (the library, PrivateTmp's /tmp and /var/tmp, and /dev/shm), so
+# those are listed too. A new external tool (for example ffmpeg) must be added to ExecPaths.
+NoExecPaths=/ /mnt/dietpi_userdata/pifoto /tmp /var/tmp /dev/shm
+ExecPaths=/opt/pifoto /usr/bin/nice /usr/bin/djpeg /usr/lib/arm-linux-gnueabihf
+# New files are 0640 and new folders 0750. Only pifoto reads them. The APK in app/ is copied in by
+# root with its own mode (644), so this does not affect it.
+UMask=0027
+PrivateDevices=yes
+PrivateIPC=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+ProtectProc=invisible
+ProcSubset=pid
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RemoveIPC=yes
+# The server only listens on TCP and makes no outgoing connections. Go's listener needs no
+# netlink. It needs no unix sockets either: logs go to the stdout stream that systemd opens.
+# A future feature that lists network interfaces (net.Interfaces) would need AF_NETLINK added.
+RestrictAddressFamilies=AF_INET AF_INET6
+SystemCallArchitectures=native
+# @system-service includes @resources. "nice -n 10 djpeg" needs setpriority from it. Without
+# CAP_SYS_NICE or CAP_SYS_RESOURCE, a process can only lower its own priority and limits anyway.
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged
+# memfd_create + execveat would run a copied binary from memory, around ExecPaths; nothing here uses it.
+SystemCallFilter=~memfd_create
+SystemCallErrorNumber=EPERM
+# Not used:
+# - PrivateUsers: a capability inside a user namespace cannot bind port 80 on the host network.
+# - IPAddressAllow/Deny: the Pi also has home-network IPv6 addresses (a ULA, and a prefix from the
+#   provider that changes), so a fixed address list could lock out devices at home.
+# - RestrictFileSystems, SocketBindAllow, RestrictNetworkInterfaces: Raspbian's systemd is built
+#   without BPF_FRAMEWORK.
+
+[Install]
+WantedBy=multi-user.target

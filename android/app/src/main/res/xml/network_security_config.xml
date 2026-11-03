@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Plain HTTP only for the Pi's home address (http://raspberrypi.fritz.box), which the app uses
+     only after it has proven to be the Pi (Api.verifyHome). Everything else, including the public
+     address, must be HTTPS, so nothing else can be talked to without a certificate check. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">raspberrypi.fritz.box</domain>
+    </domain-config>
+</network-security-config>
