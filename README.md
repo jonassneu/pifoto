@@ -3,6 +3,15 @@
 A small, self-hosted photo library: a minimal Google Photos alternative that runs on a
 Raspberry Pi 1 (ARMv6, 512 MB RAM).
 
+## Extremely lightweight
+
+- **One 10 MB binary.** The server, the web UI and its icons are all in it. Nothing else to
+  install except `djpeg` for thumbnails.
+- **About 45 MB of RAM** while serving a library of about 25,000 photos and videos (170 GB) on a Pi 1.
+- **No database and no dependencies.** Go standard library only; the library index is
+  a JSON file.
+- **No frameworks in the web UI.** The whole app is one HTML file, about 60 KB gzipped.
+
 ## What it does
 
 - A web library of your photos and videos, grouped by month, with a viewer and uploads from the browser.
