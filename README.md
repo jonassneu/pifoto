@@ -1,15 +1,16 @@
 # PiFoto
 
-An extremely lightweight, self-hosted photo library: a minimal Google Photos alternative that
-runs on a Raspberry Pi 1 (ARMv6, 512 MB RAM).
+An extremely lightweight, self-hosted photo library for a family: a minimal Google Photos
+alternative that runs on a Raspberry Pi 1 at home.
 
-- **Tiny:** one 10 MB binary with the web UI built in, about 45 MB of RAM for a library of
-  25,000 photos and videos. No database and no dependencies (Go standard library only).
-- **Family accounts:** everyone has their own private library, plus a shared Family album.
-  Admins invite people by link and can set storage limits.
-- **Android app:** backs up new photos and videos automatically, at home and away, and updates
-  itself from your server.
-- **Google Takeout import,** with duplicates stored only once.
+![PiFoto in a browser and on a phone](docs/pifoto.webp)
+
+10 MB binary · 45 MB of RAM for 25,000 photos and videos · Raspberry Pi 1, 512 MB · Go standard library only
+
+- A private library for each person and a shared Family album, with invites by link and storage limits
+- An Android app that backs up new photos and videos at home and away, and updates itself
+- Import from Google Takeout, with every duplicate stored once
+- No database: the index is one JSON file, and the whole web UI is one HTML file inside the binary
 
 ## Quick start
 
@@ -58,3 +59,4 @@ to upload.
 
 - API and security rules: `docs/family-api.md`
 - Tests: `go test ./...`; synthetic test photos: `go run ./tools/mkphotos OUTDIR [count]`
+- The photos in the screenshot are from [Unsplash](https://unsplash.com), via [Lorem Picsum](https://picsum.photos)
